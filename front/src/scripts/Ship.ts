@@ -35,6 +35,10 @@ class Ship {
     public updatePosition(x: number = 0, y: number = 0) {
         this.x += x;
         this.y += y;
+        if (this.x < 0) this.x = 0;
+        if (this.x > 800 - 96) this.x = 800 - 96;
+        if (this.y > 0) this.y = 0;
+        if (this.y < - 800 + 46) this.y = - 800 + 46;
         this.element.style.transform = `translate(${this.x}px, ${this.y}px) rotateY(${this.isFlipped ? '180deg' : '0deg'}`;
     }
 
@@ -67,11 +71,6 @@ class Ship {
             isShooting: isShooting
         })
     }
-
-    /*public rotateObject(amount: number) {
-        this.rotate += amount;
-        this.element.style.transform = `rotate(${this.rotate}deg) translate(${this.x}px, ${this.y}px)`;
-    }*/
 }
 
 export default Ship;

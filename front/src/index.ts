@@ -110,6 +110,12 @@ socket.on('reset', () => {
     }
 })
 
+socket.on('playerDisconnect', () => {
+    playerTwo.disconnect();
+    playerTwo = null;
+    myNumber = 1;
+})
+
 const draw = () => {
     if (press.up) {
         playerOne.updatePosition(0, -5);
@@ -139,6 +145,5 @@ const draw = () => {
     }
 }
 
-const game = setInterval(draw, 30)
-//
+const game = setInterval(draw, 30);
 

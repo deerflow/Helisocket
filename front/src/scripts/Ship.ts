@@ -71,6 +71,10 @@ class Ship {
             isShooting: isShooting
         })
     }
+
+    public disconnect() {
+        this.element.remove();
+    }
 }
 
 export default Ship;

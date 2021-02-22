@@ -23,7 +23,10 @@ io.on('connection', socket => {
     })
 
     socket.on('disconnect', () => {
-        playerNumber--;
+        if (playerNumber <= 2) {
+            playerNumber--;
+            socket.broadcast.emit('playerDisconnect');
+        }
     })
 })
 

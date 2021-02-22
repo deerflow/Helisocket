@@ -7796,6 +7796,10 @@ function () {
     });
   };
 
+  Ship.prototype.disconnect = function () {
+    this.element.remove();
+  };
+
   return Ship;
 }();
 
@@ -7926,6 +7930,11 @@ socket.on('reset', function () {
     playerTwo.setPosition(0, 0, true);
   }
 });
+socket.on('playerDisconnect', function () {
+  playerTwo.disconnect();
+  playerTwo = null;
+  myNumber = 1;
+});
 
 var draw = function draw() {
   if (press.up) {
@@ -7962,7 +7971,7 @@ var draw = function draw() {
   }
 };
 
-var game = setInterval(draw, 30); //
+var game = setInterval(draw, 30);
 },{"socket.io-client":"../node_modules/socket.io-client/build/index.js","./scripts/Ship":"scripts/Ship.ts"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';

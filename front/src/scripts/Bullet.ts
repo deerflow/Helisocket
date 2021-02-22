@@ -32,20 +32,21 @@ class Bullet {
         this.element.style.transform = `translate(${this.x}px, ${this.y}px)`;
     }
 
-    public checkCollision(player: Ship, socket) {
+    public checkCollision(player: Ship, socket, playerNumber: number) {
         const playerPos = player.getPosition()
         if (this.x > playerPos.x - 20 && this.x < playerPos.x + 20 && this.y > playerPos.y - 40 && this.y < playerPos.y + 40) {
-            socket.emit('reset')
+            this.destroy();
+            socket.emit('reset', playerNumber)
         }
     }
 
-    public eachFrame(player: Ship, socket) {
+    public eachFrame(player: Ship, socket, playerNumber: number) {
         if (this.direction) {
             this.updatePosition(20, 0)
         } else {
             this.updatePosition(-20, 0);
         }
-        this.checkCollision(player, socket)
+        this.checkCollision(player, socket, playerNumber)
 
     }
 

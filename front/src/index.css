@@ -15,3 +15,13 @@
 .helico {
     transform-origin: center;
 }
+
+.score {
+    width: 100%;
+    position: absolute;
+    color: #fff;
+    text-align: center;
+    font-size: 2rem;
+    font-family: sans-serif;
+    margin: 1rem 0;
+}

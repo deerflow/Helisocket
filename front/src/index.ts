@@ -21,6 +21,8 @@ const press = {
 const socket = io();
 
 const screen = document.getElementById('screen');
+const score = document.getElementById('score');
+
 let playerOne;
 let playerTwo;
 
@@ -110,6 +112,10 @@ socket.on('reset', () => {
     }
 })
 
+socket.on('score', scoreText => {
+    score.innerText = `${scoreText[0]} - ${scoreText[1]}`
+});
+
 socket.on('playerDisconnect', () => {
     playerTwo.disconnect();
     playerTwo = null;
@@ -138,10 +144,10 @@ const draw = () => {
     }
 
     if (playerOne.bullet) {
-        playerOne.bullet.eachFrame(playerTwo, socket);
+        playerOne.bullet.eachFrame(playerTwo, socket, myNumber);
     }
     if (playerTwo && playerTwo.bullet) {
-        playerTwo.bullet.eachFrame(playerTwo, socket);
+        playerTwo.bullet.eachFrame(playerTwo, socket, myNumber);
     }
 }
 

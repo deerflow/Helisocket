@@ -7658,22 +7658,23 @@ function () {
     this.element.style.transform = "translate(" + this.x + "px, " + this.y + "px)";
   };
 
-  Bullet.prototype.checkCollision = function (player, socket) {
+  Bullet.prototype.checkCollision = function (player, socket, playerNumber) {
     var playerPos = player.getPosition();
 
     if (this.x > playerPos.x - 20 && this.x < playerPos.x + 20 && this.y > playerPos.y - 40 && this.y < playerPos.y + 40) {
-      socket.emit('reset');
+      this.destroy();
+      socket.emit('reset', playerNumber);
     }
   };
 
-  Bullet.prototype.eachFrame = function (player, socket) {
+  Bullet.prototype.eachFrame = function (player, socket, playerNumber) {
     if (this.direction) {
       this.updatePosition(20, 0);
     } else {
       this.updatePosition(-20, 0);
     }
 
-    this.checkCollision(player, socket);
+    this.checkCollision(player, socket, playerNumber);
   };
 
   Bullet.prototype.destroy = function () {
@@ -7837,6 +7838,7 @@ var press = {
 };
 var socket = socket_io_client_1.io();
 var screen = document.getElementById('screen');
+var score = document.getElementById('score');
 var playerOne;
 var playerTwo;
 var myNumber;
@@ -7930,6 +7932,9 @@ socket.on('reset', function () {
     playerTwo.setPosition(0, 0, true);
   }
 });
+socket.on('score', function (scoreText) {
+  score.innerText = scoreText[0] + " - " + scoreText[1];
+});
 socket.on('playerDisconnect', function () {
   playerTwo.disconnect();
   playerTwo = null;
@@ -7963,11 +7968,11 @@ var draw = function draw() {
   }
 
   if (playerOne.bullet) {
-    playerOne.bullet.eachFrame(playerTwo, socket);
+    playerOne.bullet.eachFrame(playerTwo, socket, myNumber);
   }
 
   if (playerTwo && playerTwo.bullet) {
-    playerTwo.bullet.eachFrame(playerTwo, socket);
+    playerTwo.bullet.eachFrame(playerTwo, socket, myNumber);
   }
 };
 

@@ -6,6 +6,7 @@ const server = http.createServer(app);
 const io = require('socket.io')(server);
 
 let playerNumber = 0;
+let score = [0, 0];
 
 io.on('connection', socket => {
     playerNumber++;
@@ -18,14 +19,19 @@ io.on('connection', socket => {
         socket.broadcast.emit('position', position);
     })
 
-    socket.on('reset', () => {
+    socket.on('reset', number => {
+        score[number - 1]++;
         io.emit('reset');
+        console.log(score);
+        io.emit('score', score);
     })
 
     socket.on('disconnect', () => {
         if (playerNumber <= 2) {
             playerNumber--;
             socket.broadcast.emit('playerDisconnect');
+            score = [0, 0];
+            io.emit('score', score);
         }
     })
 })

@@ -1,0 +1,17 @@
+#screen {
+    position: relative;
+    background: #000;
+    width: 800px;
+    height: 800px;
+    overflow: hidden;
+}
+
+.helico, .bullet {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+
+.helico {
+    transform-origin: center;
+}
